@@ -39,7 +39,7 @@ passport.use(new WindowsLiveTokenStrategy({
     clientSecret: WINDOWS_LIVE_CLIENT_SECRET,
     passReqToCallback: true
 }, function(req, accessToken, refreshToken, profile, next) {
-    User.findOrCreate({'windows-live.id': profile.id}, function(error, user) {
+    User.findOrCreate({'windowslive.id': profile.id}, function(error, user) {
         return next(error, user);
     });
 }));
@@ -47,12 +47,12 @@ passport.use(new WindowsLiveTokenStrategy({
 
 ### Authenticate Requests
 
-Use `passport.authenticate()`, specifying the `windows-live-token` strategy, to authenticate requests.
+Use `passport.authenticate()`, specifying the `windowslive-token` strategy, to authenticate requests.
 
 For example, as route middleware in an [Express](http://expressjs.com/) application:
 
 ```javascript
-app.get('/auth/windows-live', passport.authenticate('windows-live-token'));
+app.get('/auth/windowslive', passport.authenticate('windowslive-token'));
 ```
 
 Or if you are using Sails framework:
@@ -61,7 +61,7 @@ Or if you are using Sails framework:
 // AuthController.js
 module.exports = {
     'windows-live': function(req, res) {
-        passport.authenticate('windows-live-token', function(error, user, info) {
+        passport.authenticate('windowslive-token', function(error, user, info) {
             if (error) return res.serverError(error);
             if (info) return res.unauthorized(info);
             return res.ok(user);
@@ -70,10 +70,10 @@ module.exports = {
 };
 ```
 
-The request to this route should include a GET or POST data with the keys `access_token` and optionally, `refresh_token` set to the credentials you receive from Windows Live.
+The request to this route should include a GET or POST data or set as a header with the keys `access_token` and optionally, `refresh_token` set to the credentials you receive from Windows Live.
 
 ```
-GET /auth/windows-live?access_token=<TOKEN>
+GET /auth/windowslive?access_token=<TOKEN>
 ```
 
 ## Issues
